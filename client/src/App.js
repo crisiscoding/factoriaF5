@@ -80,7 +80,7 @@ function App() {
     <div className="App">
       <div className="content">
         <Routes>
-          <Route path="/fotos" element={<Fotogrid fotos={fotos} />} />
+          <Route path="/" element={<Fotogrid fotos={fotos} />} />
           <Route
             path="/nueva"
             element={<Editfoto addFoto={(f) => addFoto(f)} />}
