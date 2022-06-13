@@ -1,0 +1,26 @@
+.Grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-auto-rows: 185px;
+  gap: 30px;
+  margin: 20px;
+}
+
+.img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  cursor: pointer;
+}
+h5 {
+  margin-top: 5px;
+}
+.Searchbar {
+  margin-top: 20px;
+  margin-bottom: 20px;
+  text-decoration: none;
+}
+
+.img:hover {
+  border: 3px solid rgb(78, 75, 75);
+}

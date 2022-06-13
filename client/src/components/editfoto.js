@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./editfoto.css";
-import { Route, Routes, Link, useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 const EMPTY_FORM = {
   imagen: "",
@@ -8,11 +8,34 @@ const EMPTY_FORM = {
 };
 
 export default function Editfoto(props) {
-  const [foto, setFoto] = useState(EMPTY_FORM);
+  const [foto, setFoto] = useState({});
   const [preview, setPreview] = useState("");
   const navigate = useNavigate();
 
-  //works
+  const [error, setError] = useState();
+  let { id } = useParams();
+  useEffect(() => {
+    editarFoto();
+  }, []);
+
+  //this sends the clicked-on picture to the edit form
+  async function editarFoto() {
+    let dataURL = `../fotos/${id}`;
+
+    try {
+      let response = await fetch(dataURL);
+      if (response.ok) {
+        let data = await response.json();
+        setPreview(() => ({ ...preview, imagen: data[0].imagen }));
+        setFoto(data[0]);
+      } else {
+        setError(`Server error: ${response.status} ${response.statusText}`);
+      }
+    } catch (err) {
+      setError(`Network error: ${error.message}`);
+    }
+  }
+
   const handlePreview = (e) => {
     const { name, value } = e.target;
     setPreview(() => ({ ...preview, [name]: value }));
@@ -26,17 +49,20 @@ export default function Editfoto(props) {
     }));
   };
 
-  //works
   const handleSubmit = (e) => {
     e.preventDefault();
-    props.addFoto(foto);
+    if (id) {
+      props.editFoto(id, foto);
+    } else {
+      props.addFoto(foto);
+    }
     setFoto(EMPTY_FORM);
     navigate(`/fotos`);
   };
 
   return (
     <div>
-      <img src={preview.imagen} />
+      <img alt="" src={preview.imagen} />
       <form onSubmit={(e) => handleSubmit(e)}>
         <div>
           <label>

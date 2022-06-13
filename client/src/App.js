@@ -39,7 +39,6 @@ function App() {
       body: JSON.stringify(f),
     };
     let data = null;
-    //console.log("inside App.handleAddItem");
     try {
       let response = await fetch("/fotos", options);
       if (response.ok) {
@@ -54,6 +53,29 @@ function App() {
     return data;
   }
 
+  async function editFoto(id, mod) {
+    let options = {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(mod),
+    };
+
+    let data = null;
+    try {
+      let response = await fetch(`/fotos/${id}`, options);
+      if (response.ok) {
+        data = await response.json();
+        setFotos(data);
+      } else {
+        console.log("server error:", response.statusText);
+      }
+    } catch (e) {
+      console.log("network error:", e.message);
+    }
+  }
+
   return (
     <div className="App">
       <div className="content">
@@ -63,7 +85,10 @@ function App() {
             path="/nueva"
             element={<Editfoto addFoto={(f) => addFoto(f)} />}
           />
-          <Route path="editar/:id" element={<Editfoto />} />
+          <Route
+            path="editar/:id"
+            element={<Editfoto editFoto={(id, mod) => editFoto(id, mod)} />}
+          />
         </Routes>
       </div>
     </div>

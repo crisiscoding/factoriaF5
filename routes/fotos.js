@@ -4,7 +4,7 @@ const db = require("../model/helper");
 const fs = require("fs/promises");
 //const path = require("path");
 
-//working on thunderclient
+//working
 router.get("/", async (req, res, next) => {
   try {
     let results = await db(`SELECT * FROM fotos_favoritas_f5 ORDER BY id ASC;`);
@@ -14,7 +14,7 @@ router.get("/", async (req, res, next) => {
   }
 });
 
-//working on thunderclient
+//working
 router.get("/:id", async (req, res, next) => {
   let id = req.params.id;
   try {
@@ -29,11 +29,9 @@ router.get("/:id", async (req, res, next) => {
   }
 });
 
-//working on thunderclient
+//working
 router.post("/", async (req, res) => {
   let { imagen, titulo } = req.body;
-
-  //todo el lio de imagenes, maybe check later
 
   let sql = `
   INSERT INTO fotos_favoritas_f5 (imagen, titulo)
@@ -48,7 +46,27 @@ router.post("/", async (req, res) => {
   }
 });
 
-//falta patch
+//working on thunderclient
+router.put("/:id", async (req, res) => {
+  let id = req.params.id;
+  try {
+    let result = await db(`SELECT * FROM fotos_favoritas_f5 WHERE  id = ${id}`);
+    if (result.data.length === 1) {
+      let { imagen, titulo } = req.body;
+
+      let sql = `UPDATE fotos_favoritas_f5 
+      SET imagen= '${imagen}', titulo= '${titulo}' WHERE id = ${id}`;
+
+      await db(sql);
+      result = await db("SELECT * FROM fotos_favoritas_f5");
+      res.send(result.data);
+    } else {
+      res.status(404).send({ error: err.message });
+    }
+  } catch (err) {
+    res.status(404).send({ error: err.message });
+  }
+});
 
 router.delete("/:id", async (req, res) => {
   let id = req.params.id;
