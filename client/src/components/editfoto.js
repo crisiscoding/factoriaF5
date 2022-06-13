@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import "./editfoto.css";
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, Link, useNavigate } from "react-router-dom";
 
 const EMPTY_FORM = {
   imagen: "",
@@ -10,9 +10,10 @@ const EMPTY_FORM = {
 export default function Editfoto(props) {
   const [foto, setFoto] = useState(EMPTY_FORM);
   const [preview, setPreview] = useState("");
+  const navigate = useNavigate();
 
+  //works
   const handlePreview = (e) => {
-    //for pic preview, should simplify
     const { name, value } = e.target;
     setPreview(() => ({ ...preview, [name]: value }));
   };
@@ -25,15 +26,17 @@ export default function Editfoto(props) {
     }));
   };
 
+  //works
   const handleSubmit = (e) => {
     e.preventDefault();
     props.addFoto(foto);
     setFoto(EMPTY_FORM);
+    navigate(`/fotos`);
   };
 
   return (
     <div>
-      <img src={preview.picture} />
+      <img src={preview.imagen} />
       <form onSubmit={(e) => handleSubmit(e)}>
         <div>
           <label>

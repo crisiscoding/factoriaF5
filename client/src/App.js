@@ -63,7 +63,6 @@ function App() {
             path="/nueva"
             element={<Editfoto addFoto={(f) => addFoto(f)} />}
           />
-
           <Route path="editar/:id" element={<Editfoto />} />
         </Routes>
       </div>
