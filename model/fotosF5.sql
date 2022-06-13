@@ -8,3 +8,17 @@ CREATE TABLE fotos_favoritas_f5(
     `titulo` VARCHAR(255) NOT NULL
 );
 
+/* 
+
+INSERT INTO fotos_favoritas_f5 (imagen, titulo)
+  VALUES ("noidtestingtesting", "anotherimagefromdb");
+
+
+  {
+      imagen: "pruebadesdethunderclient",
+      titulo: "titulodepruebablabla"
+  } 
+  
+  
+  
+  */

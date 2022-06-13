@@ -1,9 +1,10 @@
 var express = require("express");
 var router = express.Router();
-const db = require(".../model/helper");
-//const fs = require("fs/promises");
+const db = require("../model/helper");
+const fs = require("fs/promises");
 //const path = require("path");
 
+//working on thunderclient
 router.get("/", async (req, res, next) => {
   try {
     let results = await db(`SELECT * FROM fotos_favoritas_f5 ORDER BY id ASC;`);
@@ -13,6 +14,7 @@ router.get("/", async (req, res, next) => {
   }
 });
 
+//working on thunderclient
 router.get("/:id", async (req, res, next) => {
   let id = req.params.id;
   try {
@@ -27,6 +29,7 @@ router.get("/:id", async (req, res, next) => {
   }
 });
 
+//working on thunderclient
 router.post("/", async (req, res) => {
   let { imagen, titulo } = req.body;
 
@@ -34,7 +37,7 @@ router.post("/", async (req, res) => {
 
   let sql = `
   INSERT INTO fotos_favoritas_f5 (imagen, titulo)
-  VALUES ('${imagen}, ${titulo}')`;
+  VALUES ('${imagen}', '${titulo}')`;
 
   try {
     await db(sql);
@@ -45,7 +48,7 @@ router.post("/", async (req, res) => {
   }
 });
 
-//falta patch??
+//falta patch
 
 router.delete("/:id", async (req, res) => {
   let id = req.params.id;
